@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>আমাদের সম্পর্কে — বাইতুল বারাকাহ সমিতি</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-inner" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+    <a href="index.html" class="brand">
+      <img class="emblem" src="assets/logo-small.png" alt="বাইতুল বারাকাহ সমিতি লোগো">
+      <span class="brand-text">
+        <span class="name-bn" style="display:block;">বাইতুল বারাকাহ</span>
+        <span class="name-en">Baitul Barakah Samiti</span>
+      </span>
+    </a>
+    
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mainnav" onclick="const n=document.getElementById('mainnav');const open=n.classList.toggle('open');this.setAttribute('aria-expanded',open);">মেনু ☰</button>
+    
+    <nav class="main-nav" id="mainnav">
+      <ul>
+        <li><a href="index.html">হোম</a></li>
+        <li><a href="about.html" class="active">আমাদের সম্পর্কে</a></li>
+        <li><a href="rules.html">নিয়মাবলী</a></li>
+        <li><a href="members.html">সদস্য তালিকা</a></li>
+        <li><a href="projects.html">কার্যক্রম</a></li>
+        <li><a href="form.html">সদস্য ফরম</a></li>
+        <li><a href="contact.html">যোগাযোগ</a></li>
+      </ul>
+      <div id="nav-auth-slot"></div>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" style="padding:52px 0 64px;">
+  <div class="star-texture"></div>
+  <div class="wrap">
+    <div class="eyebrow">পরিচিতি</div>
+    <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);">আমাদের সম্পর্কে</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap prose">
+    <p>বাইতুল বারাকাহ সমিতি ২০২৬ সালে ঢাকার কামরাঙ্গীরচর এলাকায় প্রতিষ্ঠিত একটি সমবায় সঞ্চয় সংস্থা। এলাকার কিছু ইসলামী স্কলার ও বিশ্বস্ত ব্যক্তিদের উদ্যোগে এগারো জন প্রতিষ্ঠাতা সদস্য নিয়ে এই সমিতির যাত্রা শুরু হয়, যার মূল উদ্দেশ্য ছিল সদস্যদের মধ্যে নিয়মিত সঞ্চয়ের অভ্যাস গড়ে তোলা এবং প্রয়োজনের সময় একে অপরের পাশে দাঁড়ানো।</p>
+
+    <h3>আমাদের লক্ষ্য</h3>
+    <p>সমিতির মূল লক্ষ্য হলো সদস্যদের মধ্যে সুদমুক্ত ও শরীয়াহসম্মত পদ্ধতিতে সঞ্চয় ব্যবস্থা গড়ে তোলা। প্রতি মাসে সদস্যরা নির্ধারিত পরিমাণ চাঁদা জমা দেন, যা সংরক্ষিত থাকে সমিতির যৌথ তহবিলে। প্রয়োজনের সময় — যেমন পারিবারিক জরুরি অবস্থা, চিকিৎসা ব্যয়, বা অন্য কোনো বৈধ প্রয়োজনে — সদস্যরা এই তহবিল থেকে সহায়তা নিতে পারেন, সমিতির নিয়মাবলী অনুযায়ী।</p>
+
+    <h3>পরিচালনা পদ্ধতি</h3>
+    <p>সমিতির প্রতিটি সিদ্ধান্ত নেওয়া হয় পরিচালনা কমিটির পরামর্শে, এবং ইসলামী স্কলারদের তত্ত্বাবধানে নিশ্চিত করা হয় যে কোনো লেনদেনে সুদ বা অস্বচ্ছতার সংমিশ্রণ না ঘটে। প্রতিটি জমা ও উত্তোলনের জন্য রশিদ সংরক্ষণ করা হয়, এবং হিসাব রাখা হয় নগদ ও বিকাশ — উভয় মাধ্যমেই আলাদাভাবে।</p>
+
+    <h3>কেন "বারাকাহ"?</h3>
+    <p>"বারাকাহ" শব্দের অর্থ বরকত বা কল্যাণ। আমরা বিশ্বাস করি, হালাল পথে অর্জিত ও পরিচালিত সম্পদে আল্লাহ তাআলা বরকত দান করেন। এই বিশ্বাস থেকেই সমিতির নামকরণ করা হয়েছে "বাইতুল বারাকাহ" — অর্থাৎ, বরকতের ঘর।</p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="ayat">"তোমরা একে অপরকে কল্যাণ ও তাকওয়ার কাজে সাহায্য কর" — সূরা আল-মায়িদাহ, আয়াত ২</p>
+    <div class="footer-grid">
+      <div>
+        <h4>বাইতুল বারাকাহ সমিতি</h4>
+        <p>কামরাঙ্গীরচর, ঢাকা — ইসলামী স্কলারদের তত্ত্বাবধানে পরিচালিত একটি সমবায় সঞ্চয় সংস্থা। প্রতিষ্ঠা ২০২৬।</p>
+      </div>
+      <div>
+        <h4>পেজসমূহ</h4>
+        <ul>
+          <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+          <li><a href="rules.html">নিয়মাবলী</a></li>
+          <li><a href="members.html">সদস্য তালিকা</a></li>
+          <li><a href="projects.html">কার্যক্রম</a></li>
+          <li><a href="form.html">সদস্য ফরম</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>যোগাযোগ</h4>
+        <ul>
+          <li>কামরাঙ্গীরচর, ঢাকা</li>
+          <li><a href="contact.html">যোগাযোগ পেজ দেখুন</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© ২০২৬ বাইতুল বারাকাহ সমিতি। সর্বস্বত্ব সংরক্ষিত।</div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>সদস্য ফরম — বাইতুল বারাকাহ সমিতি</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .form-container {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 32px;
+    max-width: 750px;
+    margin: 0 auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  }
+  .form-section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--green);
+    margin: 24px 0 16px 0;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--line);
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-group {
+    margin-bottom: 16px;
+  }
+  .form-group.full-width {
+    grid-column: span 2;
+  }
+  .form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 0.95rem;
+  }
+  .pdf-download-box {
+    background: #f9f9f6;
+    border: 1px dashed var(--green);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .main-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+  }
+  .main-nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    gap: 15px;
+  }
+</style>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="nav-inner" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+    <a href="index.html" class="brand">
+      <img class="emblem" src="assets/logo-small.png" alt="লোগো">
+      <span class="brand-text">
+        <span class="name-bn" style="display:block;">বাইতুল বারাকাহ</span>
+        <span class="name-en">Baitul Barakah Samiti</span>
+      </span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mainnav" onclick="const n=document.getElementById('mainnav');const open=n.classList.toggle('open');this.setAttribute('aria-expanded',open);">মেনু ☰</button>
+    <nav class="main-nav" id="mainnav">
+      <ul>
+        <li><a href="index.html">হোম</a></li>
+        <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+        <li><a href="rules.html">নিয়মাবলী</a></li>
+        <li><a href="members.html">সদস্য তালিকা</a></li>
+        <li><a href="projects.html">কার্যক্রম</a></li>
+        <li><a href="form.html" class="active">সদস্য ফরম</a></li>
+        <li><a href="contact.html">যোগাযোগ</a></li>
+      </ul>
+      <div id="nav-auth-slot"></div>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" style="padding:52px 0 64px;">
+  <div class="star-texture"></div>
+  <div class="wrap">
+    <div class="eyebrow">অংশগ্রহণ করুন</div>
+    <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);">সদস্য হওয়ার আবেদন ফরম</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="form-container">
+      
+      <!-- পিডিএফ ডাউনলোড অপশন -->
+      <div class="pdf-download-box">
+        <h3 style="margin-bottom: 8px; color: var(--ink);">অথবা প্রিন্ট-রেডি ফরম ডাউনলোড করুন</h3>
+        <p style="font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 15px;">হাতে লিখে জমা দিতে চাইলে নিচের বাটনে ক্লিক করে PDF ফরমটি ডাউনলোড করে নিন।</p>
+        <a href="assets/membership-form.pdf" class="btn btn-gold" style="background:var(--green); color:#fff; padding:10px 20px; border-radius:6px; text-decoration:none; display:inline-block; font-weight:bold;" download>ফরম ডাউনলোড করুন (PDF)</a>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 25px;">
+        <h2 style="color: var(--green);">অনলাইন সদস্য আবেদন ফরম</h2>
+        <p style="font-size: 0.9rem; color: var(--ink-soft);">নিচের ফর্মটি অনলাইনে পূরণ করে সরাসরি আমাদের কাছে জমা দিন।</p>
+      </div>
+
+      <!-- আপনার দেওয়া Formspree লিংক এখানে সংযুক্ত করা হয়েছে -->
+      <form id="onlineMembershipForm" action="https://formspree.io/f/mjybdqdo" method="POST">
+        
+        <!-- আবেদনকারীর তথ্য -->
+        <div class="form-section-title">১. আবেদনকারীর সাধারণ তথ্য</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>আবেদনকারীর নাম:</label>
+            <input type="text" name="name" required placeholder="আপনার পূর্ণ নাম লিখুন">
+          </div>
+          <div class="form-group">
+            <label>পিতার নাম:</label>
+            <input type="text" name="fatherName" required placeholder="পিতার নাম লিখুন">
+          </div>
+          <div class="form-group">
+            <label>মাতার নাম:</label>
+            <input type="text" name="motherName" required placeholder="মাতার নাম লিখুন">
+          </div>
+          <div class="form-group">
+            <label>জন্ম তারিখ:</label>
+            <input type="date" name="dob" required>
+          </div>
+          <div class="form-group">
+            <label>ধর্ম:</label>
+            <input type="text" name="religion" required placeholder="যেমন: ইসলাম">
+          </div>
+          <div class="form-group">
+            <label>পেশা:</label>
+            <input type="text" name="occupation" required placeholder="আপনার পেশা">
+          </div>
+          <div class="form-group">
+            <label>জাতীয়তা:</label>
+            <input type="text" name="nationality" value="বাংলাদেশী" readonly style="background:#f1f1f1;">
+          </div>
+          <div class="form-group">
+            <label>জাতীয় পরিচয়পত্র / জন্মনিবন্ধন নং:</label>
+            <input type="text" name="nid" required placeholder="এনআইডি বা জন্মনিবন্ধন নম্বর">
+          </div>
+          <div class="form-group">
+            <label>লিঙ্গ:</label>
+            <select name="gender" required>
+              <option value="">বাছাই করুন</option>
+              <option value="পুরুষ">পুরুষ</option>
+              <option value="মহিলা">মহিলা</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>মোবাইল নং:</label>
+            <input type="tel" name="mobile" required placeholder="০১XXXXXXXXX">
+          </div>
+          <div class="form-group">
+            <label>ই-মেইল:</label>
+            <input type="email" name="email" placeholder="example@email.com">
+          </div>
+          <div class="form-group">
+            <label>পারিবারিক সদস্য সংখ্যা:</label>
+            <input type="number" name="familyMembers" required placeholder="যেমন: ৫">
+          </div>
+          <div class="form-group full-width">
+            <label>সঞ্চয়ের উৎস:</label>
+            <input type="text" name="savingsSource" required placeholder="যেমন: ব্যবসা / চাকরি / অন্যান্য">
+          </div>
+          <div class="form-group full-width">
+            <label>বর্তমান ঠিকানা:</label>
+            <textarea name="presentAddress" rows="2" required placeholder="বাসা, রোড, এলাকা, থানা, জেলা"></textarea>
+          </div>
+          <div class="form-group full-width">
+            <label>স্থায়ী ঠিকানা:</label>
+            <textarea name="permanentAddress" rows="2" required placeholder="গ্রাম/মহল্লা, ডাকঘর, উপজেলা, জেলা"></textarea>
+          </div>
+        </div>
+
+        <!-- নমিনির তথ্য -->
+        <div class="form-section-title">২. নমিনির তথ্য</div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>নমিনির নাম:</label>
+            <input type="text" name="nomineeName" required placeholder="নমিনির পূর্ণ নাম">
+          </div>
+          <div class="form-group">
+            <label>পিতার নাম (নমিনি):</label>
+            <input type="text" name="nomineeFather" required placeholder="পিতার নাম">
+          </div>
+          <div class="form-group">
+            <label>মাতার নাম (নমিনি):</label>
+            <input type="text" name="nomineeMother" required placeholder="মাতার নাম">
+          </div>
+          <div class="form-group">
+            <label>জাতীয় পরিচয়পত্র নং (নমিনি):</label>
+            <input type="text" name="nomineeNid" required placeholder="এনআইডি নম্বর">
+          </div>
+          <div class="form-group">
+            <label>আবেদনকারীর সাথে সম্পর্ক:</label>
+            <input type="text" name="relation" required placeholder="যেমন: স্ত্রী / ভাই / পিতা">
+          </div>
+          <div class="form-group full-width">
+            <label>নমিনির ঠিকানা:</label>
+            <textarea name="nomineeAddress" rows="2" required placeholder="নমিনির পূর্ণ ঠিকানা"></textarea>
+          </div>
+        </div>
+
+        <div style="margin-top: 30px;">
+          <button type="submit" class="btn btn-gold" style="width: 100%; background: var(--green); color: #fff; border: none; padding: 14px; border-radius: 6px; cursor: pointer; font-size: 1.05rem; font-weight: bold;">অনলাইন আবেদন জমা দিন</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="ayat">"তোমরা একে অপরকে কল্যাণ ও তাকওয়ার কাজে সাহায্য কর" — সূরা আল-মায়িদাহ, আয়াত ২</p>
+    <div class="footer-bottom">© ২০২৬ বাইতুল বারাকাহ সমিতি। সর্বস্বত্ব সংরক্ষিত।</div>
+  </div>
+</footer>
+
+</body>
+</html>

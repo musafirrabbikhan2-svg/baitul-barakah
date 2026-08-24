@@ -1,0 +1,27 @@
+/* =========================================================
+   বাইতুল বারাকাহ সমিতি — ভিজিটর লগ Apps Script
+   =========================================================
+   এই পুরো কোডটা script.google.com এ একটা নতুন প্রজেক্টে
+   পেস্ট করে দিন। বিস্তারিত ধাপ README.txt তে আছে।
+   ========================================================= */
+
+function doGet(e) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet();
+  let visitorSheet = sheet.getSheetByName("Visitors");
+
+  // "Visitors" নামে ট্যাব না থাকলে নিজে থেকেই তৈরি হয়ে যাবে
+  if (!visitorSheet) {
+    visitorSheet = sheet.insertSheet("Visitors");
+    visitorSheet.appendRow(["নাম", "ইমেইল", "সময়"]);
+  }
+
+  const name = e.parameter.name || "";
+  const email = e.parameter.email || "";
+  const time = e.parameter.time || new Date().toLocaleString();
+
+  if (email) {
+    visitorSheet.appendRow([name, email, time]);
+  }
+
+  return ContentService.createTextOutput("OK");
+}

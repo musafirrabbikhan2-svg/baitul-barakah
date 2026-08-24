@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>সদস্য তালিকা — বাইতুল বারাকাহ সমিতি</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .member-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  }
+  .member-table th, .member-table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    font-size: 0.95rem;
+  }
+  .member-table th {
+    background: var(--green);
+    color: #fff;
+    font-weight: 600;
+  }
+  .member-table tr:last-child td {
+    border-bottom: none;
+  }
+  .member-table tr:hover {
+    background: #fdfdfc;
+  }
+  .loading-text {
+    text-align: center;
+    padding: 30px;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+  }
+</style>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <img class="emblem" src="assets/logo-small.png" alt="লোগো">
+      <span class="brand-text">
+        <span class="name-bn" style="display:block;">বাইতুল বারাকাহ</span>
+        <span class="name-en">Baitul Barakah Samiti</span>
+      </span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="mainnav" onclick="const n=document.getElementById('mainnav');const open=n.classList.toggle('open');this.setAttribute('aria-expanded',open);">মেনু ☰</button>
+    <nav class="main-nav" id="mainnav">
+      <ul>
+        <li><a href="index.html">হোম</a></li>
+        <li><a href="about.html">আমাদের সম্পর্কে</a></li>
+        <li><a href="rules.html">নিয়মাবলী</a></li>
+        <li><a href="members.html" class="active">সদস্য তালিকা</a></li>
+        <li><a href="projects.html">কার্যক্রম</a></li>
+        <li><a href="form.html">সদস্য ফরম</a></li>
+        <li><a href="contact.html">যোগাযোগ</a></li>
+      </ul>
+      <div id="nav-auth-slot"></div>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" style="padding:52px 0 64px;">
+  <div class="star-texture"></div>
+  <div class="wrap">
+    <div class="eyebrow">আমাদের পরিবার</div>
+    <h1 style="font-size:clamp(1.9rem,4vw,2.6rem);">সদস্য তালিকা ও লাইভ হিসাব</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div style="overflow-x: auto;">
+      <div id="member-container">
+        <div class="loading-text">গুগল শিট থেকে সদস্যের তালিকা লোড হচ্ছে...</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="ayat">"তোমরা একে অপরকে কল্যাণ ও তাকওয়ার কাজে সাহায্য কর" — সূরা আল-মায়িদাহ, আয়াত ২</p>
+    <div class="footer-bottom">© ২০২৬ বাইতুল বারাকাহ সমিতি। সর্বস্বত্ব সংরক্ষিত।</div>
+  </div>
+</footer>
+
+<script>
+  // আপনার আপডেট করা গুগল শিট CSV লিংক
+  const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTHtSXpCZZDM3AO3Q7uBv8RvTDsHehY0DCwFWpnQtV3iwuTBAG6hGGenyrgW_PMCA/pub?gid=2116650967&single=true&output=csv";
+
+  // গোপনীয়তার স্বার্থে এই কলামগুলো Sheet এ থাকলেও ওয়েবসাইটে দেখানো হবে না
+  const HIDDEN_COLUMNS = ["মোবাইল", "ঠিকানা", "পিতার নাম"];
+
+  function parseCSVLine(line) {
+    let result = [];
+    let cur = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      let char = line[i];
+      if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === ',' && !inQuotes) {
+        result.push(cur.trim());
+        cur = '';
+      } else {
+        cur += char;
+      }
+    }
+    result.push(cur.trim());
+    return result.map(val => val.replace(/^"|"$/g, ''));
+  }
+
+  async function loadGoogleSheetCSV() {
+    const container = document.getElementById('member-container');
+    try {
+      const response = await fetch(csvUrl + (csvUrl.includes('?') ? '&' : '?') + 't=' + new Date().getTime());
+
+      if (!response.ok) {
+        throw new Error('HTTP status ' + response.status);
+      }
+
+      const csvText = await response.text();
+
+      if (csvText.trim() === '' || csvText.includes('<!DOCTYPE html>')) {
+        container.innerHTML = `<div class="loading-text" style="color:red;">গুগল শিট থেকে সঠিক CSV ডাটা পাওয়া যায়নি। দয়া করে শিটটি আবার 'Publish to Web' করুন।</div>`;
+        return;
+      }
+
+      const rawLines = csvText.split('\n').map(l => l.replace(/\r$/, ''));
+
+      // প্রথম যে সারিতে "ক্রমিক", "নাম" বা "পদবী" শব্দ পাওয়া যায়, সেটাকেই আসল হেডার সারি ধরা হচ্ছে —
+      // এর আগের শিরোনাম/খালি সারিগুলো (যেমন সমিতির নাম, ঠিকানা লাইন) বাদ পড়ে যাবে।
+      let headerIndex = rawLines.findIndex(line => {
+        const cells = parseCSVLine(line);
+        return cells.some(c => ["ক্রমিক", "নাম", "সদস্যের নাম", "পদবী"].includes(c.trim()));
+      });
+      if (headerIndex === -1) headerIndex = 0;
+
+      const allHeaders = parseCSVLine(rawLines[headerIndex]);
+      // যে কলামের নাম HIDDEN_COLUMNS এর মধ্যে পড়ে, সেগুলো টেবিলে দেখানো হবে না
+      const visibleIndexes = allHeaders
+        .map((h, i) => ({ h: h.trim(), i }))
+        .filter(({ h }) => h !== '' && !HIDDEN_COLUMNS.includes(h));
+
+      const dataLines = rawLines
+        .slice(headerIndex + 1)
+        .filter(line => line.trim() !== '' && parseCSVLine(line).some(c => c.trim() !== ''));
+
+      if (dataLines.length === 0) {
+        container.innerHTML = `<div class="loading-text">এখনো কোনো সদস্যের তথ্য যোগ করা হয়নি।</div>`;
+        return;
+      }
+
+      let tableHTML = `<table class="member-table"><thead><tr>`;
+      visibleIndexes.forEach(({ h }) => {
+        tableHTML += `<th>${h}</th>`;
+      });
+      tableHTML += `</tr></thead><tbody>`;
+
+      dataLines.forEach(line => {
+        const rowData = parseCSVLine(line);
+        tableHTML += `<tr>`;
+        visibleIndexes.forEach(({ i }) => {
+          tableHTML += `<td>${rowData[i] !== undefined ? rowData[i] : ''}</td>`;
+        });
+        tableHTML += `</tr>`;
+      });
+
+      tableHTML += `</tbody></table>`;
+      container.innerHTML = tableHTML;
+
+    } catch (error) {
+      console.error('Error fetching CSV:', error);
+      container.innerHTML = `
+        <div style="text-align:center; padding:30px; color:#a33;">
+          তথ্য লোড করতে সমস্যা হয়েছে।<br>
+          <span style="font-size:0.85rem; color:var(--ink-soft);">
+            সাধারণত এর কারণ: Google Sheet টা এখনো ঠিকভাবে "Publish to web" করা হয়নি,
+            অথবা CSV লিংকটা ভুল। Sheet এ গিয়ে File → Share → Publish to web থেকে
+            আবার publish করে দেখুন।
+          </span>
+        </div>`;
+    }
+  }
+
+  loadGoogleSheetCSV();
+</script>
+</body>
+</html>
